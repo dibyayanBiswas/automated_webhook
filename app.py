@@ -9,12 +9,9 @@ TELEGRAM_CHAT_ID = '-1002885426467'  # or your chat ID
 ZAPIER_WEBHOOK_URL = ''  # Optional
 
 def format_chartink_data(raw_text):
-    lines = raw_text.strip().split('\n')
-    tickers = []
-    for line in lines:
-        match = re.match(r'^([A-Z]+)\s*-\s*\d+', line.strip())
-        if match:
-            tickers.append(f"NSE:{match.group(1)}")
+    # Find all matches like "TICKER - 123.45"
+    matches = re.findall(r'\b([A-Z]{2,})\s*-\s*[\d.]+', raw_text)
+    tickers = [f"NSE:{ticker}" for ticker in matches]
     return ', '.join(tickers)
 
 @app.route('/webhook/chartink', methods=['POST'])
