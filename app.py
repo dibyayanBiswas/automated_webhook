@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from datetime import datetime
 import requests
 import re
 
@@ -20,11 +21,14 @@ def chartink_webhook():
         data = request.get_data(as_text=True)
         formatted = format_chartink_data(data)
 
+        # Get current date and time in desired format
+        now = datetime.now().strftime('%B %d, %Y at %I:%M %p')
+        
         # Send to Telegram
         telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         telegram_payload = {
             "chat_id": TELEGRAM_CHAT_ID,
-            "text": f"Formatted Tickers: {formatted}"
+            "text": f"📊 Setup Stocks High EPS & RS - Equialpha\n🕒 {now}\n\n{formatted}"
         }
         requests.post(telegram_url, json=telegram_payload)
 
