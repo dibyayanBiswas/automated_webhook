@@ -28,7 +28,7 @@ def chartink_webhook():
         telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         telegram_payload = {
             "chat_id": TELEGRAM_CHAT_ID,
-            "text": f"📊 Setup Stocks High EPS & RS - Equialpha\n🕒 {now}\n\n{formatted}"
+            "text": f"Setup Stocks High EPS & RS - Equialpha\n{now}\n\n{formatted}"
         }
         requests.post(telegram_url, json=telegram_payload)
 
